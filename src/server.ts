@@ -9,8 +9,6 @@ const port = 3000
 app.use(express.json())
 dotenv.config()
 
-
-
 const messageQueue = new Queue("message", {
   defaultJobOptions: {
     attempts: 3,
@@ -81,12 +79,14 @@ app.post("/sendMessage", async (req, res) => {
   res.send("Message added to queue")
 })
 
-
 const redis = new Redis({
   port: Number(process.env.REDIS_PORT) || 0,
   host: process.env.REDIS_HOST,
   username: process.env.REDIS_USER,
   password: process.env.REDIS_PASSWORD,
+  tls: {
+    host: process.env.REDIS_HOST,
+  },
 })
 
 redis.connect(() => console.log("Redis connected"))

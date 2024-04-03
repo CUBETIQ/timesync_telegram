@@ -1,11 +1,12 @@
-import express, { Express } from "express"
+import express from "express"
 import Queue from "bull"
-import TelegramBot from "node-telegram-bot-api"
 import axios from "axios"
+import dotenv from "dotenv"
 
 const app = express()
 const port = 3000
 app.use(express.json())
+dotenv.config()
 
 const messageQueue = new Queue("message", {
   defaultJobOptions: {
@@ -63,11 +64,12 @@ const sendMessage = async (chatId: string, token: string, message: string) => {
 }
 
 app.get("/", async (req, res) => {
-  res.json("Hello Word")
+  res.json("Hello World")
 })
 
 app.post("/sendMessage", async (req, res) => {
   const { chatId, token, message } = req.body
+
   if (!chatId || !token || !message) {
     res.status(400).send("Missing required parameters {chatId, token, message}")
     return

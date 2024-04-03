@@ -62,6 +62,10 @@ const sendMessage = async (chatId: string, token: string, message: string) => {
   // await bot.sendMessage(chatId, message)
 }
 
+app.get("/", async (req, res) => {
+  res.json("Hello Word")
+})
+
 app.post("/sendMessage", async (req, res) => {
   const { chatId, token, message } = req.body
   if (!chatId || !token || !message) {

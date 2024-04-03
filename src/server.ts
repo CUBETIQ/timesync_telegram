@@ -89,8 +89,7 @@ const redis = new Redis({
   },
 })
 
-redis.connect(() => console.log("Redis connected"))
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
+  redis.connect(() => console.log("Redis connected"))
 })

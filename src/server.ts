@@ -2,7 +2,6 @@ import express from "express"
 import Queue from "bull"
 import axios from "axios"
 import dotenv from "dotenv"
-import Redis from "ioredis"
 
 const app = express()
 const port = 3000
@@ -10,6 +9,15 @@ app.use(express.json())
 dotenv.config()
 
 const messageQueue = new Queue("message", {
+  redis: {
+    port: Number(process.env.REDIS_PORT) || 0,
+    host: process.env.REDIS_HOST,
+    username: process.env.REDIS_USER,
+    password: process.env.REDIS_PASSWORD,
+    tls: {
+      host: process.env.REDIS_HOST,
+    },
+  },
   defaultJobOptions: {
     attempts: 3,
     removeOnComplete: true,
@@ -79,17 +87,6 @@ app.post("/sendMessage", async (req, res) => {
   res.send("Message added to queue")
 })
 
-const redis = new Redis({
-  port: Number(process.env.REDIS_PORT) || 0,
-  host: process.env.REDIS_HOST,
-  username: process.env.REDIS_USER,
-  password: process.env.REDIS_PASSWORD,
-  tls: {
-    host: process.env.REDIS_HOST,
-  },
-})
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
-  redis.connect(() => console.log("Redis connected"))
 })

@@ -8,16 +8,16 @@ const port = 3000
 app.use(express.json())
 dotenv.config()
 
-const messageQueue = new Queue("message", {
-  redis: {
-    port: Number(process.env.REDIS_PORT) || 0,
-    host: process.env.REDIS_HOST,
-    username: process.env.REDIS_USER,
-    password: process.env.REDIS_PASSWORD,
-    tls: {
-      host: process.env.REDIS_HOST,
-    },
-  },
+const messageQueue = new Queue("message", 'redis://red-co6cvugl6cac73a75qg0:6379',{
+  // redis: {
+  //   port: Number(process.env.REDIS_PORT) || 0,
+  //   host: process.env.REDIS_HOST,
+  //   username: process.env.REDIS_USER,
+  //   password: process.env.REDIS_PASSWORD,
+  //   tls: {
+  //     host: process.env.REDIS_HOST,
+  //   },
+  // },
   defaultJobOptions: {
     attempts: 3,
     removeOnComplete: true,

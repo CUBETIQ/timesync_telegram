@@ -1,4 +1,4 @@
-FROM cubetiq/calpine-node:latest
+FROM cubetiq/calpine-node:latest AS node_builder
 
 WORKDIR /usr/src/app
 
@@ -11,7 +11,7 @@ RUN npm run build
 
 FROM redis:latest
 
-COPY --from=node_builder /usr/src/server /usr/src/server
+COPY --from=node_builder /usr/src/app /usr/src/app
 
 EXPOSE 6379
 

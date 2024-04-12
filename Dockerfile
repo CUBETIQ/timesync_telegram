@@ -1,16 +1,18 @@
-# FROM cubetiq/calpine-node:latest
+FROM cubetiq/calpine-node:latest
 
-# WORKDIR /usr/src/app
+WORKDIR /usr/src/app
 
-# COPY package*.json ./
-# RUN npm install
+COPY package*.json ./
+RUN npm install
 
-# COPY . .
+COPY . .
 
-# RUN npm run build
-
-# CMD [ "npm", "start" ] 
+RUN npm run build
 
 FROM redis:latest
 
+COPY --from=node_builder /usr/src/app /usr/src/app
+
 EXPOSE 6379
+
+CMD [ "npm", "start" ] 

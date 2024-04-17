@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express"
+import express, { Request, Response } from "express"
 import dotenv from "dotenv"
 import buildInfo from "./build_info"
 import { initRedis } from "./service/redisService"
@@ -11,7 +11,7 @@ dotenv.config()
 
 //////////// Health Check //////////////
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to timesync!")
+  res.send("Welcome to timesync telegram!")
 })
 
 app.get("/_/health", (req: Request, res: Response) => {

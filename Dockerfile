@@ -1,20 +1,18 @@
-FROM node:latest AS node_builder
+FROM node:alpine
 
+# Create app directory
 WORKDIR /usr/src/app
 
+# Install app dependencies
 COPY package*.json ./
+
 RUN npm install
 
+# Bundle app source
 COPY . .
 
-RUN npm run build
+# Expose the port the app runs on
+EXPOSE 3000
 
-FROM redis:latest
-
-EXPOSE 6379
-
-COPY --from=node_builder /usr/src/app /usr/src/app
-
-WORKDIR /usr/src/app
-
-CMD [ "npm", "start" ] 
+# Start the app
+CMD ["npm", "start"]

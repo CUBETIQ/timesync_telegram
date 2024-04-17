@@ -9,10 +9,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: my-node-app-container
     ports:
       - "3000:3000"
     environment:
       - REDIS_HOST=redis
     depends_on:
       - redis
+  

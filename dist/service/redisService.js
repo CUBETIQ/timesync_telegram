@@ -7,8 +7,9 @@ exports.initRedis = void 0;
 const redis_1 = require("redis");
 const dotenv_1 = __importDefault(require("dotenv"));
 const index_1 = require("../controller/index");
+const app_config_1 = require("../constant/app_config");
 dotenv_1.default.config();
-const redisClient = (0, redis_1.createClient)({ url: process.env.REDIS_URL });
+const redisClient = (0, redis_1.createClient)({ url: app_config_1.REDIS_URL });
 const initRedis = async () => {
     await redisClient.connect();
     console.log("Redis connected successfully!");
